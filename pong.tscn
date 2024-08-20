@@ -25,14 +25,14 @@ texture = ExtResource("3_7i2j6")
 position = Vector2(320, 188)
 texture = ExtResource("4_wauri")
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-
 [node name="score_label_p1" type="Label" parent="."]
-offset_left = 250.0
-offset_right = 290.0
-offset_bottom = 23.0
+offset_left = 230.0
+offset_right = 270.0
+offset_bottom = 45.0
 theme_override_font_sizes/font_size = 32
 
 [node name="score_label_p2" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 370.0
+offset_right = 410.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 32

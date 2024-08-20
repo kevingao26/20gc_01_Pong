@@ -1,0 +1,51 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1iuesyvxleet"]
+
+[ext_resource type="Script" path="res://menu.gd" id="1_eav2j"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_eav2j")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 641.0
+offset_bottom = 400.0
+color = Color(0.0128584, 0.00384119, 0.0258413, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 179.0
+offset_top = 72.0
+offset_right = 428.0
+offset_bottom = 389.0
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Pong"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayAIButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Solo (vs AI)"
+
+[node name="Play2PButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "2 Players"
+
+[node name="Controls" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Controls"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="VBoxContainer/PlayAIButton" to="." method="_on_play_ai_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Play2PButton" to="." method="_on_play_2p_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Controls" to="." method="_on_controls_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

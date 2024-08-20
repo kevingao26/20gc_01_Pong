@@ -10,10 +10,10 @@ const INITIAL_BALL_SPEED = 380
 # Speed of the ball (also in pixels/second)
 var ball_speed = INITIAL_BALL_SPEED
 # Constant for pads speed
-const MAX_PADDLE_SPEED = 650
-const PADDLE_ACCELERATION = 5000
+const MAX_PADDLE_SPEED = 550
+const PADDLE_ACCELERATION = 6000
 const PADDLE_DECELERATION = 3000
-const AI_SPEED = 200
+const AI_SPEED = 175
 
 var score_p1 = 0
 var score_p2 = 0
@@ -25,6 +25,9 @@ var score_pause_timer: Timer
 
 var p1_velocity = 0
 var p2_velocity = 0
+
+var game_paused = false
+var game_over = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -45,13 +48,32 @@ func _ready():
     add_child(score_pause_timer)
     score_pause_timer.one_shot = true
     score_pause_timer.wait_time = 1.0
+    
+    # pause game
+    var pause_icon = Sprite2D.new()
+    pause_icon.texture = load("res://assets/pause.png")
+    pause_icon.position = screen_size / 2
+    pause_icon.name = "pause_icon"
+    pause_icon.hide()
+    add_child(pause_icon)
+
+func _input(event):
+    if event.is_action_pressed("pause"):
+        toggle_pause()
+    if event.is_action_pressed("space") and game_over:
+        queue_free()
+        get_tree().change_scene_to_file("res://menu.tscn")
+
+func toggle_pause():
+    game_paused = !game_paused
+    $pause_icon.visible = game_paused
 
 func paddle_contact(left, right, ball_pos):
     if ((left.has_point(ball_pos) and direction.x < 0) or (right.has_point(ball_pos) and direction.x > 0)):
         direction.x = -direction.x
         direction.y = randf()*2.0 - 1
         direction = direction.normalized()
-        ball_speed *= 1.06
+        ball_speed *= 1.07
         paddle_hit_sound.play()
         
 func move_pad(pad, delta, xn):
@@ -79,10 +101,13 @@ func move_pad(pad, delta, xn):
         p2_velocity = velocity
     
 func move_ai_pad(pad, ball, delta):
-    var target_y = predict_ball_y(ball)
+    var target_y = 0
+    if direction[0] > 0:
+        target_y = predict_ball_y(ball)
+    else:
+        target_y = screen_size.y / 2
     var direction = 1 if target_y > pad.position.y else -1
     pad.position.y += direction * AI_SPEED * delta
-    print(pad.position.y)
     pad.position.y = clamp(pad.position.y, 0, screen_size.y)
 
 func predict_ball_y(ball):
@@ -105,7 +130,10 @@ func predict_ball_y(ball):
     return predicted_y
         
 func _process(delta):
-    if score_pause_timer.is_stopped():
+    if game_over:
+        return
+        
+    if not game_paused and score_pause_timer.is_stopped():
         process_game(delta)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -144,14 +172,19 @@ func process_game(delta):
         update_score_display()
         
         # reset
-        ball_pos = screen_size*0.5
-        ball_speed = INITIAL_BALL_SPEED
-        $p1.position.y = screen_size.y * 0.5
-        $p2.position.y = screen_size.y * 0.5
-        p1_velocity = 0
-        p2_velocity = 0
+        if score_p1 >= 7 or score_p2 >= 7:
+            game_over = true
+            var winner = "Player 1" if score_p1 > score_p2 else "Player 2"
+            $game_over_label.text = winner + " wins!\nPress Space to return to menu"
+            $game_over_label.show()
+        else:
+            ball_pos = screen_size * 0.5
+            ball_speed = INITIAL_BALL_SPEED
+            $p1.position.y = screen_size.y * 0.5
+            $p2.position.y = screen_size.y * 0.5
+            p1_velocity = 0
+            p2_velocity = 0  
         
-        score_pause_timer.start()
     
     $ball.position = ball_pos
     

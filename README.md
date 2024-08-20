@@ -1,4 +1,4 @@
-# Pong Game
+# Pong
 
 A simple Pong game built using Godot, where two players can compete against each other by controlling paddles to hit the ball back and forth. The game also includes AI support for single-player mode.
 

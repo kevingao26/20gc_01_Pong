@@ -30,7 +30,3 @@ To play the game, simply download and run the provided `01a_Pong.exe`.
 ## Game Notes
 
 The game ends when either side scores 7 points.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

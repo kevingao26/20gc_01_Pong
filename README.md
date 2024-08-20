@@ -2,6 +2,13 @@
 
 A simple Pong game built using Godot, where two players can compete against each other by controlling paddles to hit the ball back and forth. The game also includes AI support for single-player mode.
 
+![image](https://github.com/user-attachments/assets/10b6172e-b6fd-4c81-8588-d831a1043f7d)
+![image](https://github.com/user-attachments/assets/b98d1b78-a988-4ce9-800d-b297e6134fc7)
+
+
+
+
+
 ## Features
 
 ### Core Features

@@ -10,7 +10,7 @@ const INITIAL_BALL_SPEED = 380
 # Speed of the ball (also in pixels/second)
 var ball_speed = INITIAL_BALL_SPEED
 # Constant for pads speed
-const MAX_PADDLE_SPEED = 500
+const MAX_PADDLE_SPEED = 650
 const PADDLE_ACCELERATION = 5000
 const PADDLE_DECELERATION = 3000
 const AI_SPEED = 200
